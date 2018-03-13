@@ -35,6 +35,9 @@ const styles = (theme) => ({
     userSelect: 'none',
     '&.selected': {
       color: getContrastRatio(theme.palette.primary.main, theme.palette.common.black) < 7 ? theme.palette.common.white : theme.palette.common.black
+    },
+    '&.disabled': {
+      color: '#aaa'
     }
   },
   smallNumber: {
@@ -126,14 +129,15 @@ class Clock extends React.PureComponent {
   }
 
   movePointer (x, y) {
-    const value = getPointerValue(x, y, this.props.mode)
-    if (value !== this.props.value && this.props.onChange != null) {
+    const {disabled, mode, onChange} = this.props
+    const value = getPointerValue(x, y, mode)
+    if (disabled ? !disabled.includes(value) : true && value !== value && onChange != null) {
       this.props.onChange(value)
     }
   }
 
   render () {
-    const { classes, mode, value, ...other } = this.props
+    const { classes, mode, value, disabled, ...other } = this.props
     const { touching } = this.state
 
     return (
@@ -157,7 +161,7 @@ class Clock extends React.PureComponent {
           {mode === '12h' && getNumbers(12, { size }).map((digit, i) => (
             <span
               key={digit.display}
-              className={classNames(classes.number, { selected: value === digit.display })}
+              className={classNames(classes.number, { selected: value === digit.display, disabled: disabled ? disabled.includes(digit.display) : false})}
               style={{
                 transform: `translate(${digit.translateX}px, ${digit.translateY}px)`
               }}

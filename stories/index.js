@@ -9,7 +9,7 @@ import TimeInput from '../src/TimeInput'
 
 storiesOf('Clock', module)
   .add('12 hours', () => (
-    <Clock mode='12h' value={7} onChange={action('onChange')} />
+    <Clock mode='12h' disabled={[1, 2, 3, 4]} value={7} onChange={action('onChange')} />
   ))
   .add('24 hours', () => (
     <div>
@@ -26,7 +26,7 @@ storiesOf('Clock', module)
 
 storiesOf('TimePicker', module)
   .add('12 hours', () => (
-    <TimePicker mode='12h' onChange={action('onChange')} />
+    <TimePicker mode='12h' disabled={[1, 2, 3, 4]} onChange={action('onChange')} />
   ))
   .add('24 hours', () => (
     <TimePicker mode='24h' onChange={action('onChange')} />
